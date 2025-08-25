@@ -16,16 +16,6 @@ interface SearchConfig {
   icon: React.ComponentType<any>;
 }
 
-interface CaseResult {
-  case_number: string;
-  case_stage: string;
-  filing_date: string;
-  complainant: string;
-  complainant_advocate: string;
-  respondent: string;
-  respondent_advocate: string;
-  document_link: string;
-}
 
 const searchConfigs: Record<string, SearchConfig> = {
   "case-number": {
@@ -67,7 +57,7 @@ const searchConfigs: Record<string, SearchConfig> = {
 };
 
 // Mock data for demonstration
-const mockStates = [
+const mockStates: State[] = [
   { id: "KA", name: "KARNATAKA" },
   { id: "MH", name: "MAHARASHTRA" },
   { id: "DL", name: "DELHI" },
@@ -75,21 +65,21 @@ const mockStates = [
   { id: "UP", name: "UTTAR PRADESH" }
 ];
 
-const mockCommissions: Record<string, Array<{id: string, name: string}>> = {
+const mockCommissions: Record<string, Commission[]> = {
   "KA": [
-    { id: "KA001", name: "Bangalore 1st & Rural Additional" },
-    { id: "KA002", name: "Bangalore 2nd Additional" },
-    { id: "KA003", name: "Mysore District" }
+    { id: "KA001", name: "Bangalore 1st & Rural Additional", state_id: "KA" },
+    { id: "KA002", name: "Bangalore 2nd Additional", state_id: "KA" },
+    { id: "KA003", name: "Mysore District", state_id: "KA" }
   ],
   "MH": [
-    { id: "MH001", name: "Mumbai District" },
-    { id: "MH002", name: "Pune District" },
-    { id: "MH003", name: "Nagpur District" }
+    { id: "MH001", name: "Mumbai District", state_id: "MH" },
+    { id: "MH002", name: "Pune District", state_id: "MH" },
+    { id: "MH003", name: "Nagpur District", state_id: "MH" }
   ],
   "DL": [
-    { id: "DL001", name: "Delhi Central" },
-    { id: "DL002", name: "Delhi North" },
-    { id: "DL003", name: "Delhi South" }
+    { id: "DL001", name: "Delhi Central", state_id: "DL" },
+    { id: "DL002", name: "Delhi North", state_id: "DL" },
+    { id: "DL003", name: "Delhi South", state_id: "DL" }
   ]
 };
 
