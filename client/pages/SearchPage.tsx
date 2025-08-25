@@ -490,15 +490,139 @@ export default function SearchPage() {
 
                       {/* Actions */}
                       <div className="flex flex-col justify-center space-y-2">
-                        <Button variant="outline" size="sm" asChild>
-                          <a
-                            href={result.document_link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <FileText className="h-4 w-4 mr-2" />
-                            View Documents
-                          </a>
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button variant="outline" size="sm" onClick={() => setSelectedCase(result)}>
+                              <Eye className="h-4 w-4 mr-2" />
+                              View Documents
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                            <DialogHeader>
+                              <DialogTitle className="flex items-center space-x-2">
+                                <FileText className="h-5 w-5" />
+                                <span>Case Documents - {result.case_number}</span>
+                              </DialogTitle>
+                              <DialogDescription>
+                                Official documents and case details from the District Consumer Court
+                              </DialogDescription>
+                            </DialogHeader>
+                            <div className="space-y-6">
+                              {/* Case Summary */}
+                              <div className="bg-slate-50 p-4 rounded-lg">
+                                <h3 className="font-semibold text-slate-900 mb-3">Case Summary</h3>
+                                <div className="grid grid-cols-2 gap-4 text-sm">
+                                  <div>
+                                    <span className="font-medium">Case Number:</span> {result.case_number}
+                                  </div>
+                                  <div>
+                                    <span className="font-medium">Stage:</span>
+                                    <Badge className={`ml-2 ${getStageColor(result.case_stage)}`}>
+                                      {result.case_stage}
+                                    </Badge>
+                                  </div>
+                                  <div>
+                                    <span className="font-medium">Filing Date:</span> {result.filing_date}
+                                  </div>
+                                  <div>
+                                    <span className="font-medium">State/Commission:</span> {selectedState}
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Available Documents */}
+                              <div>
+                                <h3 className="font-semibold text-slate-900 mb-3">Available Documents</h3>
+                                <div className="space-y-2">
+                                  <div className="flex items-center justify-between p-3 border rounded-lg">
+                                    <div className="flex items-center space-x-3">
+                                      <FileText className="h-5 w-5 text-blue-600" />
+                                      <div>
+                                        <p className="font-medium">Original Complaint</p>
+                                        <p className="text-sm text-slate-600">Filed on {result.filing_date}</p>
+                                      </div>
+                                    </div>
+                                    <Button size="sm" variant="outline">
+                                      <Download className="h-4 w-4 mr-2" />
+                                      Download
+                                    </Button>
+                                  </div>
+                                  <div className="flex items-center justify-between p-3 border rounded-lg">
+                                    <div className="flex items-center space-x-3">
+                                      <FileText className="h-5 w-5 text-green-600" />
+                                      <div>
+                                        <p className="font-medium">Response from Respondent</p>
+                                        <p className="text-sm text-slate-600">Submitted by {result.respondent_advocate}</p>
+                                      </div>
+                                    </div>
+                                    <Button size="sm" variant="outline">
+                                      <Download className="h-4 w-4 mr-2" />
+                                      Download
+                                    </Button>
+                                  </div>
+                                  {result.case_stage === 'Evidence' && (
+                                    <div className="flex items-center justify-between p-3 border rounded-lg">
+                                      <div className="flex items-center space-x-3">
+                                        <FileText className="h-5 w-5 text-purple-600" />
+                                        <div>
+                                          <p className="font-medium">Evidence Documents</p>
+                                          <p className="text-sm text-slate-600">Supporting evidence and exhibits</p>
+                                        </div>
+                                      </div>
+                                      <Button size="sm" variant="outline">
+                                        <Download className="h-4 w-4 mr-2" />
+                                        Download
+                                      </Button>
+                                    </div>
+                                  )}
+                                  {result.case_stage === 'Judgment' && (
+                                    <div className="flex items-center justify-between p-3 border rounded-lg">
+                                      <div className="flex items-center space-x-3">
+                                        <FileText className="h-5 w-5 text-orange-600" />
+                                        <div>
+                                          <p className="font-medium">Final Judgment</p>
+                                          <p className="text-sm text-slate-600">Court decision and orders</p>
+                                        </div>
+                                      </div>
+                                      <Button size="sm" variant="outline">
+                                        <Download className="h-4 w-4 mr-2" />
+                                        Download
+                                      </Button>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+
+                              {/* Case Timeline */}
+                              <div>
+                                <h3 className="font-semibold text-slate-900 mb-3">Case Timeline</h3>
+                                <div className="space-y-3">
+                                  <div className="flex items-center space-x-3 text-sm">
+                                    <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                                    <span className="font-medium">{result.filing_date}</span>
+                                    <span>Case filed by {result.complainant}</span>
+                                  </div>
+                                  <div className="flex items-center space-x-3 text-sm">
+                                    <div className="w-2 h-2 bg-green-600 rounded-full"></div>
+                                    <span className="font-medium">Current Status</span>
+                                    <span>Case in {result.case_stage} stage</span>
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Note */}
+                              <div className="bg-blue-50 p-4 rounded-lg">
+                                <p className="text-sm text-blue-800">
+                                  <strong>Note:</strong> This is a demonstration of the document viewing interface.
+                                  In a production environment, actual documents would be fetched from the Jagriti portal.
+                                </p>
+                              </div>
+                            </div>
+                          </DialogContent>
+                        </Dialog>
+                        <Button size="sm" variant="ghost" className="text-slate-600">
+                          <FileText className="h-4 w-4 mr-2" />
+                          Case Details
                         </Button>
                       </div>
                     </div>
