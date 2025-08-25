@@ -400,6 +400,14 @@ export default function SearchPage() {
                 onChange={(e) => setSearchValue(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}
               />
+              <div className="text-xs text-slate-500 bg-slate-50 p-2 rounded">
+                {searchType === 'case-number' && 'Enter full or partial case number (e.g., "123" or "123/2024")'}
+                {searchType === 'complainant' && 'Enter complainant name (e.g., "Kumar", "Rajesh", or "Rajesh Kumar")'}
+                {searchType === 'respondent' && 'Enter company or respondent name (e.g., "Flipkart", "Bank", "Ltd")'}
+                {searchType === 'advocate' && 'Enter advocate name (e.g., "Reddy", "Adv. Kumar")'}
+                {searchType === 'industry' && 'Enter industry type (e.g., "bank", "electronics", "e-commerce")'}
+                {searchType === 'judge' && 'Enter judge name for cases under their jurisdiction'}
+              </div>
             </div>
 
             <Button
