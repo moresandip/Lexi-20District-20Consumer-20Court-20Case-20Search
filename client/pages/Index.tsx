@@ -1,6 +1,21 @@
-import { Search, Scale, FileText, Users, Building, Gavel, User, Calendar } from "lucide-react";
+import {
+  Search,
+  Scale,
+  FileText,
+  Users,
+  Building,
+  Gavel,
+  User,
+  Calendar,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Link } from "react-router-dom";
 
 export default function Index() {
@@ -10,43 +25,43 @@ export default function Index() {
       description: "Find cases by specific case number",
       icon: FileText,
       path: "/search/case-number",
-      color: "text-blue-600"
+      color: "text-blue-600",
     },
     {
       title: "Complainant Search",
       description: "Search cases by complainant name",
       icon: User,
       path: "/search/complainant",
-      color: "text-green-600"
+      color: "text-green-600",
     },
     {
       title: "Respondent Search",
       description: "Find cases by respondent details",
       icon: Building,
       path: "/search/respondent",
-      color: "text-purple-600"
+      color: "text-purple-600",
     },
     {
       title: "Advocate Search",
       description: "Search by complainant or respondent advocate",
       icon: Scale,
       path: "/search/advocate",
-      color: "text-orange-600"
+      color: "text-orange-600",
     },
     {
       title: "Industry Type",
       description: "Find cases by specific industry category",
       icon: Building,
       path: "/search/industry",
-      color: "text-red-600"
+      color: "text-red-600",
     },
     {
       title: "Judge Search",
       description: "Search cases by presiding judge",
       icon: Gavel,
       path: "/search/judge",
-      color: "text-indigo-600"
-    }
+      color: "text-indigo-600",
+    },
   ];
 
   return (
@@ -60,7 +75,9 @@ export default function Index() {
             </div>
             <div>
               <h1 className="text-2xl font-bold text-slate-900">Lexi</h1>
-              <p className="text-sm text-slate-600">District Consumer Court Case Search</p>
+              <p className="text-sm text-slate-600">
+                District Consumer Court Case Search
+              </p>
             </div>
           </div>
         </div>
@@ -74,8 +91,9 @@ export default function Index() {
             Consumer Court Case Management
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-8">
-            Access and track District Consumer Court (DCDRC) cases across India. 
-            Search by multiple criteria and get real-time case status updates from the Jagriti portal.
+            Access and track District Consumer Court (DCDRC) cases across India.
+            Search by multiple criteria and get real-time case status updates
+            from the Jagriti portal.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <div className="flex items-center space-x-2 text-slate-600">
@@ -102,19 +120,33 @@ export default function Index() {
             {searchTypes.map((searchType, index) => {
               const IconComponent = searchType.icon;
               return (
-                <Card key={index} className="hover:shadow-lg transition-shadow cursor-pointer group">
+                <Card
+                  key={index}
+                  className="hover:shadow-lg transition-shadow cursor-pointer group"
+                >
                   <CardHeader className="pb-4">
                     <div className="flex items-center space-x-3">
-                      <div className={`p-2 rounded-lg bg-slate-100 group-hover:bg-slate-200 transition-colors`}>
-                        <IconComponent className={`h-6 w-6 ${searchType.color}`} />
+                      <div
+                        className={`p-2 rounded-lg bg-slate-100 group-hover:bg-slate-200 transition-colors`}
+                      >
+                        <IconComponent
+                          className={`h-6 w-6 ${searchType.color}`}
+                        />
                       </div>
-                      <CardTitle className="text-lg">{searchType.title}</CardTitle>
+                      <CardTitle className="text-lg">
+                        {searchType.title}
+                      </CardTitle>
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription className="mb-4">{searchType.description}</CardDescription>
+                    <CardDescription className="mb-4">
+                      {searchType.description}
+                    </CardDescription>
                     <Link to={searchType.path}>
-                      <Button variant="outline" className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                      <Button
+                        variant="outline"
+                        className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                      >
                         <Search className="h-4 w-4 mr-2" />
                         Search Now
                       </Button>
@@ -136,27 +168,36 @@ export default function Index() {
               <div className="p-3 bg-blue-100 rounded-lg w-fit mx-auto mb-4">
                 <Search className="h-8 w-8 text-blue-600" />
               </div>
-              <h4 className="text-lg font-semibold text-slate-900 mb-2">Advanced Search</h4>
+              <h4 className="text-lg font-semibold text-slate-900 mb-2">
+                Advanced Search
+              </h4>
               <p className="text-slate-600">
-                Multiple search criteria including case number, parties, advocates, and more
+                Multiple search criteria including case number, parties,
+                advocates, and more
               </p>
             </div>
             <div className="text-center">
               <div className="p-3 bg-green-100 rounded-lg w-fit mx-auto mb-4">
                 <FileText className="h-8 w-8 text-green-600" />
               </div>
-              <h4 className="text-lg font-semibold text-slate-900 mb-2">Comprehensive Data</h4>
+              <h4 className="text-lg font-semibold text-slate-900 mb-2">
+                Comprehensive Data
+              </h4>
               <p className="text-slate-600">
-                Complete case details including filing dates, parties, advocates, and document links
+                Complete case details including filing dates, parties,
+                advocates, and document links
               </p>
             </div>
             <div className="text-center">
               <div className="p-3 bg-purple-100 rounded-lg w-fit mx-auto mb-4">
                 <Scale className="h-8 w-8 text-purple-600" />
               </div>
-              <h4 className="text-lg font-semibold text-slate-900 mb-2">Legal Accuracy</h4>
+              <h4 className="text-lg font-semibold text-slate-900 mb-2">
+                Legal Accuracy
+              </h4>
               <p className="text-slate-600">
-                Direct integration with official Jagriti portal ensuring data accuracy and compliance
+                Direct integration with official Jagriti portal ensuring data
+                accuracy and compliance
               </p>
             </div>
           </div>

@@ -1,11 +1,33 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Scale, Search, ArrowLeft, MapPin, Building2, FileText, Calendar, User, Users } from "lucide-react";
+import {
+  Scale,
+  Search,
+  ArrowLeft,
+  MapPin,
+  Building2,
+  FileText,
+  Calendar,
+  User,
+  Users,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CaseResult, State, Commission } from "@shared/case-search";
 
@@ -16,44 +38,43 @@ interface SearchConfig {
   icon: React.ComponentType<any>;
 }
 
-
 const searchConfigs: Record<string, SearchConfig> = {
   "case-number": {
     title: "Case Number Search",
     description: "Find cases by specific case number",
     placeholder: "Enter case number (e.g., 123/2025)",
-    icon: FileText
+    icon: FileText,
   },
-  "complainant": {
-    title: "Complainant Search", 
+  complainant: {
+    title: "Complainant Search",
     description: "Search cases by complainant name",
     placeholder: "Enter complainant name",
-    icon: User
+    icon: User,
   },
-  "respondent": {
+  respondent: {
     title: "Respondent Search",
     description: "Find cases by respondent details",
     placeholder: "Enter respondent name or company",
-    icon: Building2
+    icon: Building2,
   },
-  "advocate": {
+  advocate: {
     title: "Advocate Search",
     description: "Search by complainant or respondent advocate",
     placeholder: "Enter advocate name",
-    icon: Scale
+    icon: Scale,
   },
-  "industry": {
+  industry: {
     title: "Industry Type Search",
     description: "Find cases by specific industry category",
     placeholder: "Enter industry type",
-    icon: Building2
+    icon: Building2,
   },
-  "judge": {
+  judge: {
     title: "Judge Search",
     description: "Search cases by presiding judge",
     placeholder: "Enter judge name",
-    icon: Users
-  }
+    icon: Users,
+  },
 };
 
 // Mock data for demonstration
@@ -62,25 +83,25 @@ const mockStates: State[] = [
   { id: "MH", name: "MAHARASHTRA" },
   { id: "DL", name: "DELHI" },
   { id: "TN", name: "TAMIL NADU" },
-  { id: "UP", name: "UTTAR PRADESH" }
+  { id: "UP", name: "UTTAR PRADESH" },
 ];
 
 const mockCommissions: Record<string, Commission[]> = {
-  "KA": [
+  KA: [
     { id: "KA001", name: "Bangalore 1st & Rural Additional", state_id: "KA" },
     { id: "KA002", name: "Bangalore 2nd Additional", state_id: "KA" },
-    { id: "KA003", name: "Mysore District", state_id: "KA" }
+    { id: "KA003", name: "Mysore District", state_id: "KA" },
   ],
-  "MH": [
+  MH: [
     { id: "MH001", name: "Mumbai District", state_id: "MH" },
     { id: "MH002", name: "Pune District", state_id: "MH" },
-    { id: "MH003", name: "Nagpur District", state_id: "MH" }
+    { id: "MH003", name: "Nagpur District", state_id: "MH" },
   ],
-  "DL": [
+  DL: [
     { id: "DL001", name: "Delhi Central", state_id: "DL" },
     { id: "DL002", name: "Delhi North", state_id: "DL" },
-    { id: "DL003", name: "Delhi South", state_id: "DL" }
-  ]
+    { id: "DL003", name: "Delhi South", state_id: "DL" },
+  ],
 };
 
 const mockResults: CaseResult[] = [
@@ -92,7 +113,7 @@ const mockResults: CaseResult[] = [
     complainant_advocate: "Adv. Reddy",
     respondent: "XYZ Ltd.",
     respondent_advocate: "Adv. Mehta",
-    document_link: "https://e-jagriti.gov.in/case123"
+    document_link: "https://e-jagriti.gov.in/case123",
   },
   {
     case_number: "124/2025",
@@ -101,9 +122,9 @@ const mockResults: CaseResult[] = [
     complainant: "Jane Smith",
     complainant_advocate: "Adv. Kumar",
     respondent: "ABC Corp",
-    respondent_advocate: "Adv. Sharma", 
-    document_link: "https://e-jagriti.gov.in/case124"
-  }
+    respondent_advocate: "Adv. Sharma",
+    document_link: "https://e-jagriti.gov.in/case124",
+  },
 ];
 
 export default function SearchPage() {
@@ -115,13 +136,15 @@ export default function SearchPage() {
   const [loading, setLoading] = useState(false);
 
   const config = searchType ? searchConfigs[searchType] : null;
-  
+
   if (!config) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
         <div className="container mx-auto px-4 py-12">
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-slate-900 mb-4">Search Type Not Found</h1>
+            <h1 className="text-2xl font-bold text-slate-900 mb-4">
+              Search Type Not Found
+            </h1>
             <Link to="/">
               <Button variant="outline">
                 <ArrowLeft className="h-4 w-4 mr-2" />
@@ -135,7 +158,9 @@ export default function SearchPage() {
   }
 
   const IconComponent = config.icon;
-  const availableCommissions = selectedState ? mockCommissions[selectedState] || [] : [];
+  const availableCommissions = selectedState
+    ? mockCommissions[selectedState] || []
+    : [];
 
   const handleSearch = async () => {
     if (!selectedState || !selectedCommission || !searchValue.trim()) {
@@ -152,11 +177,16 @@ export default function SearchPage() {
 
   const getStageColor = (stage: string) => {
     switch (stage.toLowerCase()) {
-      case 'hearing': return 'bg-blue-100 text-blue-800';
-      case 'evidence': return 'bg-green-100 text-green-800';
-      case 'judgment': return 'bg-purple-100 text-purple-800';
-      case 'closed': return 'bg-gray-100 text-gray-800';
-      default: return 'bg-slate-100 text-slate-800';
+      case "hearing":
+        return "bg-blue-100 text-blue-800";
+      case "evidence":
+        return "bg-green-100 text-green-800";
+      case "judgment":
+        return "bg-purple-100 text-purple-800";
+      case "closed":
+        return "bg-gray-100 text-gray-800";
+      default:
+        return "bg-slate-100 text-slate-800";
     }
   };
 
@@ -178,7 +208,9 @@ export default function SearchPage() {
                   <IconComponent className="h-6 w-6 text-primary-foreground" />
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold text-slate-900">{config.title}</h1>
+                  <h1 className="text-xl font-bold text-slate-900">
+                    {config.title}
+                  </h1>
                   <p className="text-sm text-slate-600">{config.description}</p>
                 </div>
               </div>
@@ -229,12 +261,15 @@ export default function SearchPage() {
 
               {/* Commission Selection */}
               <div className="space-y-2">
-                <Label htmlFor="commission" className="flex items-center space-x-2">
+                <Label
+                  htmlFor="commission"
+                  className="flex items-center space-x-2"
+                >
                   <Building2 className="h-4 w-4" />
                   <span>Commission</span>
                 </Label>
-                <Select 
-                  value={selectedCommission} 
+                <Select
+                  value={selectedCommission}
                   onValueChange={setSelectedCommission}
                   disabled={!selectedState}
                 >
@@ -260,13 +295,18 @@ export default function SearchPage() {
                 placeholder={config.placeholder}
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                onKeyDown={(e) => e.key === "Enter" && handleSearch()}
               />
             </div>
 
-            <Button 
-              onClick={handleSearch} 
-              disabled={!selectedState || !selectedCommission || !searchValue.trim() || loading}
+            <Button
+              onClick={handleSearch}
+              disabled={
+                !selectedState ||
+                !selectedCommission ||
+                !searchValue.trim() ||
+                loading
+              }
               className="w-full md:w-auto"
             >
               {loading ? (
@@ -306,7 +346,9 @@ export default function SearchPage() {
                               Case #{result.case_number}
                             </h3>
                             <div className="flex items-center space-x-2">
-                              <Badge className={getStageColor(result.case_stage)}>
+                              <Badge
+                                className={getStageColor(result.case_stage)}
+                              >
                                 {result.case_stage}
                               </Badge>
                               <span className="text-sm text-slate-500 flex items-center">
@@ -319,14 +361,26 @@ export default function SearchPage() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                           <div>
-                            <p className="font-medium text-slate-700 mb-1">Complainant</p>
-                            <p className="text-slate-600">{result.complainant}</p>
-                            <p className="text-slate-500 text-xs">Adv: {result.complainant_advocate}</p>
+                            <p className="font-medium text-slate-700 mb-1">
+                              Complainant
+                            </p>
+                            <p className="text-slate-600">
+                              {result.complainant}
+                            </p>
+                            <p className="text-slate-500 text-xs">
+                              Adv: {result.complainant_advocate}
+                            </p>
                           </div>
                           <div>
-                            <p className="font-medium text-slate-700 mb-1">Respondent</p>
-                            <p className="text-slate-600">{result.respondent}</p>
-                            <p className="text-slate-500 text-xs">Adv: {result.respondent_advocate}</p>
+                            <p className="font-medium text-slate-700 mb-1">
+                              Respondent
+                            </p>
+                            <p className="text-slate-600">
+                              {result.respondent}
+                            </p>
+                            <p className="text-slate-500 text-xs">
+                              Adv: {result.respondent_advocate}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -334,7 +388,11 @@ export default function SearchPage() {
                       {/* Actions */}
                       <div className="flex flex-col justify-center space-y-2">
                         <Button variant="outline" size="sm" asChild>
-                          <a href={result.document_link} target="_blank" rel="noopener noreferrer">
+                          <a
+                            href={result.document_link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
                             <FileText className="h-4 w-4 mr-2" />
                             View Documents
                           </a>
@@ -349,17 +407,24 @@ export default function SearchPage() {
         )}
 
         {/* No Results */}
-        {results.length === 0 && !loading && selectedState && selectedCommission && searchValue && (
-          <Card>
-            <CardContent className="pt-6 text-center">
-              <FileText className="h-12 w-12 text-slate-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-slate-900 mb-2">No cases found</h3>
-              <p className="text-slate-600">
-                No cases match your search criteria. Try adjusting your search terms.
-              </p>
-            </CardContent>
-          </Card>
-        )}
+        {results.length === 0 &&
+          !loading &&
+          selectedState &&
+          selectedCommission &&
+          searchValue && (
+            <Card>
+              <CardContent className="pt-6 text-center">
+                <FileText className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-slate-900 mb-2">
+                  No cases found
+                </h3>
+                <p className="text-slate-600">
+                  No cases match your search criteria. Try adjusting your search
+                  terms.
+                </p>
+              </CardContent>
+            </Card>
+          )}
       </main>
     </div>
   );
