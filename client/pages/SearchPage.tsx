@@ -641,14 +641,22 @@ export default function SearchPage() {
           searchValue && (
             <Card>
               <CardContent className="pt-6 text-center">
-                <FileText className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+                <Search className="h-12 w-12 text-slate-400 mx-auto mb-4" />
                 <h3 className="text-lg font-medium text-slate-900 mb-2">
-                  No cases found
+                  No cases found for "{searchValue}"
                 </h3>
-                <p className="text-slate-600">
-                  No cases match your search criteria. Try adjusting your search
-                  terms.
+                <p className="text-slate-600 mb-4">
+                  No cases match your search criteria in {selectedState}.
                 </p>
+                <div className="bg-slate-50 p-4 rounded-lg text-left max-w-md mx-auto">
+                  <h4 className="font-medium text-slate-900 mb-2">Search Tips:</h4>
+                  <ul className="text-sm text-slate-600 space-y-1">
+                    <li>• Try searching with partial names or case numbers</li>
+                    <li>• Check spelling and try different variations</li>
+                    <li>• Use broader terms (e.g., "Kumar" instead of "Rajesh Kumar")</li>
+                    <li>• Try selecting a different commission or state</li>
+                  </ul>
+                </div>
               </CardContent>
             </Card>
           )}
