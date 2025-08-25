@@ -104,27 +104,68 @@ const mockCommissions: Record<string, Commission[]> = {
   ],
 };
 
-const mockResults: CaseResult[] = [
+// Expanded mock database for different search scenarios
+const mockCaseDatabase: CaseResult[] = [
   {
-    case_number: "123/2025",
+    case_number: "123/2024",
     case_stage: "Hearing",
-    filing_date: "2025-02-01",
-    complainant: "John Doe",
+    filing_date: "2024-03-15",
+    complainant: "Rajesh Kumar",
     complainant_advocate: "Adv. Reddy",
-    respondent: "XYZ Ltd.",
+    respondent: "Flipkart India Pvt Ltd",
     respondent_advocate: "Adv. Mehta",
-    document_link: "https://e-jagriti.gov.in/case123",
+    document_link: "#case-123-2024",
   },
   {
-    case_number: "124/2025",
+    case_number: "456/2024",
     case_stage: "Evidence",
-    filing_date: "2025-01-28",
-    complainant: "Jane Smith",
+    filing_date: "2024-05-20",
+    complainant: "Priya Sharma",
     complainant_advocate: "Adv. Kumar",
-    respondent: "ABC Corp",
-    respondent_advocate: "Adv. Sharma",
-    document_link: "https://e-jagriti.gov.in/case124",
+    respondent: "Amazon Seller Services",
+    respondent_advocate: "Adv. Singh",
+    document_link: "#case-456-2024",
   },
+  {
+    case_number: "789/2024",
+    case_stage: "Judgment",
+    filing_date: "2024-01-10",
+    complainant: "Suresh Reddy",
+    complainant_advocate: "Adv. Reddy",
+    respondent: "Samsung India Electronics",
+    respondent_advocate: "Adv. Patel",
+    document_link: "#case-789-2024",
+  },
+  {
+    case_number: "101/2024",
+    case_stage: "Closed",
+    filing_date: "2023-12-05",
+    complainant: "Meera Patel",
+    complainant_advocate: "Adv. Kumar",
+    respondent: "ICICI Bank Ltd",
+    respondent_advocate: "Adv. Joshi",
+    document_link: "#case-101-2024",
+  },
+  {
+    case_number: "202/2024",
+    case_stage: "Hearing",
+    filing_date: "2024-04-12",
+    complainant: "Anil Gupta",
+    complainant_advocate: "Adv. Mehta",
+    respondent: "Airtel Payments Bank",
+    respondent_advocate: "Adv. Sharma",
+    document_link: "#case-202-2024",
+  },
+  {
+    case_number: "303/2024",
+    case_stage: "Evidence",
+    filing_date: "2024-06-08",
+    complainant: "Kavita Singh",
+    complainant_advocate: "Adv. Singh",
+    respondent: "Zomato Ltd",
+    respondent_advocate: "Adv. Agarwal",
+    document_link: "#case-303-2024",
+  }
 ];
 
 export default function SearchPage() {
@@ -168,11 +209,61 @@ export default function SearchPage() {
     }
 
     setLoading(true);
-    // Simulate API call
+
+    // Simulate API call with contextual search results
     setTimeout(() => {
-      setResults(mockResults);
+      const searchTerm = searchValue.toLowerCase();
+      let filteredResults: CaseResult[] = [];
+
+      // Filter results based on search type and search term
+      switch (searchType) {
+        case 'case-number':
+          filteredResults = mockCaseDatabase.filter(case_ =>
+            case_.case_number.toLowerCase().includes(searchTerm)
+          );
+          break;
+        case 'complainant':
+          filteredResults = mockCaseDatabase.filter(case_ =>
+            case_.complainant.toLowerCase().includes(searchTerm)
+          );
+          break;
+        case 'respondent':
+          filteredResults = mockCaseDatabase.filter(case_ =>
+            case_.respondent.toLowerCase().includes(searchTerm)
+          );
+          break;
+        case 'advocate':
+          filteredResults = mockCaseDatabase.filter(case_ =>
+            case_.complainant_advocate.toLowerCase().includes(searchTerm) ||
+            case_.respondent_advocate.toLowerCase().includes(searchTerm)
+          );
+          break;
+        case 'industry':
+          // For industry, we'll match against respondent company names
+          filteredResults = mockCaseDatabase.filter(case_ => {
+            const respondent = case_.respondent.toLowerCase();
+            return respondent.includes(searchTerm) ||
+                   respondent.includes('bank') && searchTerm.includes('bank') ||
+                   respondent.includes('electronics') && searchTerm.includes('electronics') ||
+                   respondent.includes('ltd') && searchTerm.includes('company');
+          });
+          break;
+        case 'judge':
+          // For demo purposes, return cases that might be under that judge
+          filteredResults = mockCaseDatabase.slice(0, 3);
+          break;
+        default:
+          filteredResults = mockCaseDatabase;
+      }
+
+      // If no specific matches, show some relevant cases
+      if (filteredResults.length === 0) {
+        filteredResults = mockCaseDatabase.slice(0, 2);
+      }
+
+      setResults(filteredResults);
       setLoading(false);
-    }, 1000);
+    }, 1500);
   };
 
   const getStageColor = (stage: string) => {
