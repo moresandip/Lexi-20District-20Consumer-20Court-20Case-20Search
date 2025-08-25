@@ -176,7 +176,7 @@ const mockCaseDatabase: CaseResult[] = [
     respondent: "Zomato Ltd",
     respondent_advocate: "Adv. Agarwal",
     document_link: "#case-303-2024",
-  }
+  },
 ];
 
 export default function SearchPage() {
@@ -229,38 +229,42 @@ export default function SearchPage() {
 
       // Filter results based on search type and search term
       switch (searchType) {
-        case 'case-number':
-          filteredResults = mockCaseDatabase.filter(case_ =>
-            case_.case_number.toLowerCase().includes(searchTerm)
+        case "case-number":
+          filteredResults = mockCaseDatabase.filter((case_) =>
+            case_.case_number.toLowerCase().includes(searchTerm),
           );
           break;
-        case 'complainant':
-          filteredResults = mockCaseDatabase.filter(case_ =>
-            case_.complainant.toLowerCase().includes(searchTerm)
+        case "complainant":
+          filteredResults = mockCaseDatabase.filter((case_) =>
+            case_.complainant.toLowerCase().includes(searchTerm),
           );
           break;
-        case 'respondent':
-          filteredResults = mockCaseDatabase.filter(case_ =>
-            case_.respondent.toLowerCase().includes(searchTerm)
+        case "respondent":
+          filteredResults = mockCaseDatabase.filter((case_) =>
+            case_.respondent.toLowerCase().includes(searchTerm),
           );
           break;
-        case 'advocate':
-          filteredResults = mockCaseDatabase.filter(case_ =>
-            case_.complainant_advocate.toLowerCase().includes(searchTerm) ||
-            case_.respondent_advocate.toLowerCase().includes(searchTerm)
+        case "advocate":
+          filteredResults = mockCaseDatabase.filter(
+            (case_) =>
+              case_.complainant_advocate.toLowerCase().includes(searchTerm) ||
+              case_.respondent_advocate.toLowerCase().includes(searchTerm),
           );
           break;
-        case 'industry':
+        case "industry":
           // For industry, we'll match against respondent company names
-          filteredResults = mockCaseDatabase.filter(case_ => {
+          filteredResults = mockCaseDatabase.filter((case_) => {
             const respondent = case_.respondent.toLowerCase();
-            return respondent.includes(searchTerm) ||
-                   respondent.includes('bank') && searchTerm.includes('bank') ||
-                   respondent.includes('electronics') && searchTerm.includes('electronics') ||
-                   respondent.includes('ltd') && searchTerm.includes('company');
+            return (
+              respondent.includes(searchTerm) ||
+              (respondent.includes("bank") && searchTerm.includes("bank")) ||
+              (respondent.includes("electronics") &&
+                searchTerm.includes("electronics")) ||
+              (respondent.includes("ltd") && searchTerm.includes("company"))
+            );
           });
           break;
-        case 'judge':
+        case "judge":
           // For demo purposes, return cases that might be under that judge
           filteredResults = mockCaseDatabase.slice(0, 3);
           break;
@@ -401,12 +405,18 @@ export default function SearchPage() {
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}
               />
               <div className="text-xs text-slate-500 bg-slate-50 p-2 rounded">
-                {searchType === 'case-number' && 'Enter full or partial case number (e.g., "123" or "123/2024")'}
-                {searchType === 'complainant' && 'Enter complainant name (e.g., "Kumar", "Rajesh", or "Rajesh Kumar")'}
-                {searchType === 'respondent' && 'Enter company or respondent name (e.g., "Flipkart", "Bank", "Ltd")'}
-                {searchType === 'advocate' && 'Enter advocate name (e.g., "Reddy", "Adv. Kumar")'}
-                {searchType === 'industry' && 'Enter industry type (e.g., "bank", "electronics", "e-commerce")'}
-                {searchType === 'judge' && 'Enter judge name for cases under their jurisdiction'}
+                {searchType === "case-number" &&
+                  'Enter full or partial case number (e.g., "123" or "123/2024")'}
+                {searchType === "complainant" &&
+                  'Enter complainant name (e.g., "Kumar", "Rajesh", or "Rajesh Kumar")'}
+                {searchType === "respondent" &&
+                  'Enter company or respondent name (e.g., "Flipkart", "Bank", "Ltd")'}
+                {searchType === "advocate" &&
+                  'Enter advocate name (e.g., "Reddy", "Adv. Kumar")'}
+                {searchType === "industry" &&
+                  'Enter industry type (e.g., "bank", "electronics", "e-commerce")'}
+                {searchType === "judge" &&
+                  "Enter judge name for cases under their jurisdiction"}
               </div>
             </div>
 
@@ -500,7 +510,11 @@ export default function SearchPage() {
                       <div className="flex flex-col justify-center space-y-2">
                         <Dialog>
                           <DialogTrigger asChild>
-                            <Button variant="outline" size="sm" onClick={() => setSelectedCase(result)}>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => setSelectedCase(result)}
+                            >
                               <Eye className="h-4 w-4 mr-2" />
                               View Documents
                             </Button>
@@ -509,45 +523,67 @@ export default function SearchPage() {
                             <DialogHeader>
                               <DialogTitle className="flex items-center space-x-2">
                                 <FileText className="h-5 w-5" />
-                                <span>Case Documents - {result.case_number}</span>
+                                <span>
+                                  Case Documents - {result.case_number}
+                                </span>
                               </DialogTitle>
                               <DialogDescription>
-                                Official documents and case details from the District Consumer Court
+                                Official documents and case details from the
+                                District Consumer Court
                               </DialogDescription>
                             </DialogHeader>
                             <div className="space-y-6">
                               {/* Case Summary */}
                               <div className="bg-slate-50 p-4 rounded-lg">
-                                <h3 className="font-semibold text-slate-900 mb-3">Case Summary</h3>
+                                <h3 className="font-semibold text-slate-900 mb-3">
+                                  Case Summary
+                                </h3>
                                 <div className="grid grid-cols-2 gap-4 text-sm">
                                   <div>
-                                    <span className="font-medium">Case Number:</span> {result.case_number}
+                                    <span className="font-medium">
+                                      Case Number:
+                                    </span>{" "}
+                                    {result.case_number}
                                   </div>
                                   <div>
                                     <span className="font-medium">Stage:</span>
-                                    <Badge className={`ml-2 ${getStageColor(result.case_stage)}`}>
+                                    <Badge
+                                      className={`ml-2 ${getStageColor(result.case_stage)}`}
+                                    >
                                       {result.case_stage}
                                     </Badge>
                                   </div>
                                   <div>
-                                    <span className="font-medium">Filing Date:</span> {result.filing_date}
+                                    <span className="font-medium">
+                                      Filing Date:
+                                    </span>{" "}
+                                    {result.filing_date}
                                   </div>
                                   <div>
-                                    <span className="font-medium">State/Commission:</span> {selectedState}
+                                    <span className="font-medium">
+                                      State/Commission:
+                                    </span>{" "}
+                                    {selectedState}
                                   </div>
                                 </div>
                               </div>
 
                               {/* Available Documents */}
                               <div>
-                                <h3 className="font-semibold text-slate-900 mb-3">Available Documents</h3>
+                                <h3 className="font-semibold text-slate-900 mb-3">
+                                  Available Documents
+                                </h3>
                                 <div className="space-y-2">
                                   <div className="flex items-center justify-between p-3 border rounded-lg">
                                     <div className="flex items-center space-x-3">
                                       <FileText className="h-5 w-5 text-blue-600" />
                                       <div>
-                                        <p className="font-medium">Original Complaint</p>
-                                        <p className="text-sm text-slate-600">Filed on {result.filing_date}</p>
+                                        <p className="font-medium">
+                                          Original Complaint
+                                        </p>
+                                        <p className="text-sm text-slate-600">
+                                          Filed on {result.filing_date}
+                                        </p>
                                       </div>
                                     </div>
                                     <Button size="sm" variant="outline">
@@ -559,8 +595,13 @@ export default function SearchPage() {
                                     <div className="flex items-center space-x-3">
                                       <FileText className="h-5 w-5 text-green-600" />
                                       <div>
-                                        <p className="font-medium">Response from Respondent</p>
-                                        <p className="text-sm text-slate-600">Submitted by {result.respondent_advocate}</p>
+                                        <p className="font-medium">
+                                          Response from Respondent
+                                        </p>
+                                        <p className="text-sm text-slate-600">
+                                          Submitted by{" "}
+                                          {result.respondent_advocate}
+                                        </p>
                                       </div>
                                     </div>
                                     <Button size="sm" variant="outline">
@@ -568,13 +609,17 @@ export default function SearchPage() {
                                       Download
                                     </Button>
                                   </div>
-                                  {result.case_stage === 'Evidence' && (
+                                  {result.case_stage === "Evidence" && (
                                     <div className="flex items-center justify-between p-3 border rounded-lg">
                                       <div className="flex items-center space-x-3">
                                         <FileText className="h-5 w-5 text-purple-600" />
                                         <div>
-                                          <p className="font-medium">Evidence Documents</p>
-                                          <p className="text-sm text-slate-600">Supporting evidence and exhibits</p>
+                                          <p className="font-medium">
+                                            Evidence Documents
+                                          </p>
+                                          <p className="text-sm text-slate-600">
+                                            Supporting evidence and exhibits
+                                          </p>
                                         </div>
                                       </div>
                                       <Button size="sm" variant="outline">
@@ -583,13 +628,17 @@ export default function SearchPage() {
                                       </Button>
                                     </div>
                                   )}
-                                  {result.case_stage === 'Judgment' && (
+                                  {result.case_stage === "Judgment" && (
                                     <div className="flex items-center justify-between p-3 border rounded-lg">
                                       <div className="flex items-center space-x-3">
                                         <FileText className="h-5 w-5 text-orange-600" />
                                         <div>
-                                          <p className="font-medium">Final Judgment</p>
-                                          <p className="text-sm text-slate-600">Court decision and orders</p>
+                                          <p className="font-medium">
+                                            Final Judgment
+                                          </p>
+                                          <p className="text-sm text-slate-600">
+                                            Court decision and orders
+                                          </p>
                                         </div>
                                       </div>
                                       <Button size="sm" variant="outline">
@@ -603,17 +652,27 @@ export default function SearchPage() {
 
                               {/* Case Timeline */}
                               <div>
-                                <h3 className="font-semibold text-slate-900 mb-3">Case Timeline</h3>
+                                <h3 className="font-semibold text-slate-900 mb-3">
+                                  Case Timeline
+                                </h3>
                                 <div className="space-y-3">
                                   <div className="flex items-center space-x-3 text-sm">
                                     <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
-                                    <span className="font-medium">{result.filing_date}</span>
-                                    <span>Case filed by {result.complainant}</span>
+                                    <span className="font-medium">
+                                      {result.filing_date}
+                                    </span>
+                                    <span>
+                                      Case filed by {result.complainant}
+                                    </span>
                                   </div>
                                   <div className="flex items-center space-x-3 text-sm">
                                     <div className="w-2 h-2 bg-green-600 rounded-full"></div>
-                                    <span className="font-medium">Current Status</span>
-                                    <span>Case in {result.case_stage} stage</span>
+                                    <span className="font-medium">
+                                      Current Status
+                                    </span>
+                                    <span>
+                                      Case in {result.case_stage} stage
+                                    </span>
                                   </div>
                                 </div>
                               </div>
@@ -621,14 +680,20 @@ export default function SearchPage() {
                               {/* Note */}
                               <div className="bg-blue-50 p-4 rounded-lg">
                                 <p className="text-sm text-blue-800">
-                                  <strong>Note:</strong> This is a demonstration of the document viewing interface.
-                                  In a production environment, actual documents would be fetched from the Jagriti portal.
+                                  <strong>Note:</strong> This is a demonstration
+                                  of the document viewing interface. In a
+                                  production environment, actual documents would
+                                  be fetched from the Jagriti portal.
                                 </p>
                               </div>
                             </div>
                           </DialogContent>
                         </Dialog>
-                        <Button size="sm" variant="ghost" className="text-slate-600">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="text-slate-600"
+                        >
                           <FileText className="h-4 w-4 mr-2" />
                           Case Details
                         </Button>
@@ -657,11 +722,16 @@ export default function SearchPage() {
                   No cases match your search criteria in {selectedState}.
                 </p>
                 <div className="bg-slate-50 p-4 rounded-lg text-left max-w-md mx-auto">
-                  <h4 className="font-medium text-slate-900 mb-2">Search Tips:</h4>
+                  <h4 className="font-medium text-slate-900 mb-2">
+                    Search Tips:
+                  </h4>
                   <ul className="text-sm text-slate-600 space-y-1">
                     <li>• Try searching with partial names or case numbers</li>
                     <li>• Check spelling and try different variations</li>
-                    <li>• Use broader terms (e.g., "Kumar" instead of "Rajesh Kumar")</li>
+                    <li>
+                      • Use broader terms (e.g., "Kumar" instead of "Rajesh
+                      Kumar")
+                    </li>
                     <li>• Try selecting a different commission or state</li>
                   </ul>
                 </div>
