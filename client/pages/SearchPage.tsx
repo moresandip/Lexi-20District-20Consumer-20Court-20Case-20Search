@@ -186,6 +186,7 @@ export default function SearchPage() {
   const [searchValue, setSearchValue] = useState("");
   const [results, setResults] = useState<CaseResult[]>([]);
   const [loading, setLoading] = useState(false);
+  const [selectedCase, setSelectedCase] = useState<CaseResult | null>(null);
 
   const config = searchType ? searchConfigs[searchType] : null;
 
